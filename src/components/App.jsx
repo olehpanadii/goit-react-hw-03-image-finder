@@ -37,7 +37,7 @@ export class App extends Component {
           this.state.page
         );
         if (totalHits === 0) {
-          toast.custom(`Nothing was found for your request`);
+          toast.custom(`Oooops 🤪 Nothing was found for your request`);
           return;
         }
         if (this.state.images.length > 0) {
