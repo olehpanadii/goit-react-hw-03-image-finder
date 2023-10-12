@@ -37,7 +37,7 @@ export class App extends Component {
           this.state.page
         );
         if (totalHits === 0) {
-          toast.custom(`Oooops 🤪 Nothing was found for your request`);
+          toast.custom(`Oooops 🥹 Nothing was found for your request`);
           return;
         }
         if (this.state.images.length > 0) {
@@ -61,7 +61,14 @@ export class App extends Component {
       <div>
         <Searchbar onSubmitQuery={this.handleOnSubmit} />
         {images.length > 0 && <ImageGallery images={images} />}
-        <Toaster position="top-right" reverseOrder={false} />
+        <Toaster
+          containerStyle={{
+            position: 'relative',
+            top: '40px',
+            right: '20px',
+          }}
+          reverseOrder={false}
+        />
         <Loader loading={loading} />
         {images.length > 0 && <LoadMoreBtn action={this.incrementPage} />}
       </div>
