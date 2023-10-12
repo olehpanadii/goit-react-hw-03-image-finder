@@ -1,15 +1,16 @@
 import { ImageGaleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { List, ListItem } from './ImageGallery.styled';
 
 export const ImageGallery = ({ images }) => {
   return (
     <div>
-      <ul>
+      <List>
         {images.map(image => (
-          <li key={image.id}>
+          <ListItem key={image.id}>
             <ImageGaleryItem image={image} />
-          </li>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </div>
   );
 };

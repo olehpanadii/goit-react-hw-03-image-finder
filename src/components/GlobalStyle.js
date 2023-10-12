@@ -26,7 +26,16 @@ body {
 
 img {
   display: block;
-  max-width: 100%;
-  height: auto;
+  max-width: 100%; 
+  max-height: 100%;
+  object-fit: cover;
+  object-position: center center;
+
+
+}
+ul{
+list-style:none;
+padding: 0 ;
+
 }
 `;

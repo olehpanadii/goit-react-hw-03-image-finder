@@ -1,20 +1,26 @@
-import { TbWorldSearch } from 'react-icons/tb';
+import {
+  SearchForm,
+  SearchFormButton,
+  SearchFormInput,
+  SearchbarContainer,
+  StyledIcon,
+} from './Searchbar.styled';
 
 export const Searchbar = ({ onSubmitQuery }) => {
   return (
-    <div>
-      <form onSubmit={onSubmitQuery}>
-        <button type="submit">
-          <TbWorldSearch />
-        </button>
-        <input
+    <SearchbarContainer>
+      <SearchForm onSubmit={onSubmitQuery}>
+        <SearchFormButton type="submit">
+          <StyledIcon />
+        </SearchFormButton>
+        <SearchFormInput
           name="query"
           type="text"
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
         />
-      </form>
-    </div>
+      </SearchForm>
+    </SearchbarContainer>
   );
 };

@@ -4,6 +4,7 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { fetchImages } from 'helpers/api';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
+import { LoadMoreBtn } from './Button/Button';
 
 export class App extends Component {
   state = {
@@ -12,20 +13,40 @@ export class App extends Component {
     query: '',
     loading: false,
   };
+
   handleOnSubmit = e => {
     e.preventDefault();
     this.setState({
-      query: e.target.elements.query.value,
+      query: e.target.elements.query.value.trim(),
       images: [],
       page: 1,
     });
   };
+  incrementPage = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+  };
   async componentDidUpdate(prevProps, prevState) {
-    if (prevState.query !== this.state.query) {
+    if (
+      prevState.query !== this.state.query ||
+      prevState.page !== this.state.page
+    ) {
       try {
         this.setState({ loading: true });
-        const fetchData = await fetchImages(this.state.query, this.state.page);
-        this.setState({ images: fetchData.hits });
+        const { totalHits, hits } = await fetchImages(
+          this.state.query,
+          this.state.page
+        );
+        if (totalHits === 0) {
+          toast.custom(`Nothing was found for your request`);
+          return;
+        }
+        if (this.state.images.length > 0) {
+          this.setState({
+            images: [...this.state.images, ...hits],
+          });
+        } else {
+          this.setState({ images: hits });
+        }
       } catch (error) {
         toast.error(`Oops! Something went wrong!`);
       } finally {
@@ -39,9 +60,10 @@ export class App extends Component {
     return (
       <div>
         <Searchbar onSubmitQuery={this.handleOnSubmit} />
-        <Loader loading={loading} />
-        <ImageGallery images={images} />
+        {images.length > 0 && <ImageGallery images={images} />}
         <Toaster position="top-right" reverseOrder={false} />
+        <Loader loading={loading} />
+        {images.length > 0 && <LoadMoreBtn action={this.incrementPage} />}
       </div>
     );
   }
