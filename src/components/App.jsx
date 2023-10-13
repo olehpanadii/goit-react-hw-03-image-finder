@@ -70,7 +70,9 @@ export class App extends Component {
           reverseOrder={false}
         />
         <Loader loading={loading} />
-        {images.length > 0 && <LoadMoreBtn action={this.incrementPage} />}
+        {images.length % 12 === 0 && images.length > 0 && (
+          <LoadMoreBtn action={this.incrementPage} />
+        )}
       </div>
     );
   }
